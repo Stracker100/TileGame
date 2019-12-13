@@ -74,7 +74,6 @@ public class World : MonoBehaviour {
 
 		CreateTiles ();
 		SubdivideTilesArray ();
-		SubdivideMountainArray ();
         //grid = new Grid(width, height, 1f);
 
         //Debug.Log("DETTE ER EN TSET " + tiles[5, 5].type);
@@ -198,58 +197,6 @@ public class World : MonoBehaviour {
 		render.material = material;
 
 		mesh = filter.mesh;
-
-		mesh.vertices = data.vertices.ToArray ();
-		mesh.triangles = data.triangles.ToArray ();
-		mesh.uv = data.UVs.ToArray ();
-	}
-
-
-	void SubdivideMountainArray (int i1 = 0, int i2 = 0) {
-
-		if (i1 > tiles.GetLength (0) && i2 > tiles.GetLength (1))
-			return;
-
-		//Get size of segment
-		int sizeX, sizeY;
-
-		if (tiles.GetLength (0) - i1 > 25) {
-
-			sizeX = 25;
-		} else
-			sizeX = tiles.GetLength (0) - i1;
-
-		if (tiles.GetLength (1) - i2 > 25) {
-
-			sizeY = 25;
-		} else
-			sizeY = tiles.GetLength (1) - i2;
-
-		GenerateMountainLayer (i1, i2, sizeX, sizeY);
-
-		if (tiles.GetLength (0) > i1 + 25) {
-			SubdivideMountainArray (i1 + 25, i2);
-			return;
-		}
-
-		if (tiles.GetLength (1) > i2 + 25) {
-			SubdivideMountainArray (0, i2 + 25);
-			return;
-		}
-	}
-
-	void GenerateMountainLayer (int x, int y, int width, int height) {
-
-		MeshData data = new MeshData (x, y, width, height, true);
-
-		GameObject meshGO = new GameObject ("MountainLayer_" + x + "_" + y);
-		meshGO.transform.SetParent (this.transform);
-
-		MeshFilter filter = meshGO.AddComponent<MeshFilter> ();
-		MeshRenderer render = meshGO.AddComponent<MeshRenderer> ();
-		render.material = material;
-
-		Mesh mesh = filter.mesh;
 
 		mesh.vertices = data.vertices.ToArray ();
 		mesh.triangles = data.triangles.ToArray ();
